@@ -1,0 +1,9 @@
+[submodule "src/easy_logger"]
+	path = src/easy_logger
+	url = https://github.com/hu-submodule-1/easy_logger.git
+[submodule "lvgl"]
+	path = lvgl
+	url = https://github.com/lvgl/lvgl.git
+[submodule "lv_drivers"]
+	path = lv_drivers
+	url = https://github.com/lvgl/lv_drivers.git
