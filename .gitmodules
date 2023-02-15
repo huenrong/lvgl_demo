@@ -1,6 +1,3 @@
-[submodule "src/easy_logger"]
-	path = src/easy_logger
-	url = https://github.com/hu-submodule-1/easy_logger.git
 [submodule "lvgl"]
 	path = lvgl
 	url = https://github.com/lvgl/lvgl.git

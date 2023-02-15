@@ -23,7 +23,6 @@ CFLAGS += -DLV_CONF_INCLUDE_SIMPLE
 
 # --------------------以下为指定头文件路径(根据项目情况修改)--------------------
 CFLAGS += -I./lvgl_inc
-CFLAGS += -I./src/easy_logger/inc -I./src/easy_logger/plugins/file
 
 # ------------------以下为链接器的链接参数设置(根据项目情况修改)-----------------
 LDFLAGS := -lpthread -lm
@@ -37,7 +36,6 @@ include $(LVGL_DIR)/lv_drivers/lv_drivers.mk
 TOP_PATH = .
 MOUSE_CURSOR_ICON_PATH = ./src/mouse_cursor_icon
 APP_PATH = ./src/app
-EASY_LOGGER_PATH = ./src/easy_logger
 
 # 获取工程中各文件夹下的源文件(.c)、目标文件(.o)的文件列表(根据项目情况修改)
 # 获取当前目录下的所有的.c文件列表
@@ -55,13 +53,8 @@ MOUSE_CURSOR_ICON_OBJ = $(patsubst %.c, %.o, $(MOUSE_CURSOR_ICON_SRC))
 APP_SRC = $(wildcard $(APP_PATH)/*.c)
 APP_OBJ = $(patsubst %.c, %.o, $(APP_SRC))
 
-EASY_LOGGER_SRC := $(wildcard $(EASY_LOGGER_PATH)/plugins/file/*.c)
-EASY_LOGGER_SRC += $(wildcard $(EASY_LOGGER_PATH)/port/*.c)
-EASY_LOGGER_SRC += $(wildcard $(EASY_LOGGER_PATH)/src/*.c)
-EASY_LOGGER_OBJ = $(patsubst %.c, %.o, $(EASY_LOGGER_SRC))
-
 # 所有目标文件的集合(根据项目情况修改)
-TARGET_OBJS := $(TOP_OBJ) $(LVGL_OBJ) $(MOUSE_CURSOR_ICON_OBJ) $(APP_OBJ) $(EASY_LOGGER_OBJ)
+TARGET_OBJS := $(TOP_OBJ) $(LVGL_OBJ) $(MOUSE_CURSOR_ICON_OBJ) $(APP_OBJ)
 
 # --------------------以下为编译默认目标规则(不需要修改)--------------------
 # Makefile的默认目标

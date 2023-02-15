@@ -23,11 +23,6 @@ extern "C"
 #include <stdbool.h>
 
 /**
- * @brief  初始化easy_logger
- */
-void easy_logger_init(void);
-
-/**
  * @brief  初始化LVGL
  */
 void lvgl_init(void);

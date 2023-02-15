@@ -7,6 +7,8 @@
  * @copyright : Copyright (c) 2023 huenrong
  *
  * @history   : date       author          description
+ *              2023-02-15 huenrong        1. 删除easy_logger
+ *                                         2. 修改屏幕尺寸宏定义
  *              2023-02-12 huenrong        创建文件
  *
  */
@@ -27,17 +29,15 @@
 #endif
 #include "lvgl/examples/lv_examples.h"
 
-#define LOG_TAG "app"
-#include "elog.h"
-
-#ifndef SDL_HOR_RES
-#define SDL_HOR_RES 320
-#endif
-#ifndef SDL_VER_RES
-#define SDL_VER_RES 240
+#if USE_FBDEV
+#define LV_HOR_RES_MAX 320
+#define LV_VER_RES_MAX 240
+#elif USE_SDL
+#define LV_HOR_RES_MAX SDL_HOR_RES
+#define LV_VER_RES_MAX SDL_VER_RES
 #endif
 
-#define DISP_BUF_SIZE (SDL_HOR_RES * SDL_VER_RES)
+#define DISP_BUF_SIZE (LV_HOR_RES_MAX * LV_VER_RES_MAX)
 
 /**
  * @brief  初始化LVGL硬件抽象层
@@ -66,8 +66,8 @@ static void lvgl_hal_init(void)
 #elif USE_SDL
     disp_drv.flush_cb = sdl_display_flush;
 #endif
-    disp_drv.hor_res = SDL_HOR_RES;
-    disp_drv.ver_res = SDL_VER_RES;
+    disp_drv.hor_res = LV_HOR_RES_MAX;
+    disp_drv.ver_res = LV_VER_RES_MAX;
     lv_disp_drv_register(&disp_drv);
 
 #if USE_EVDEV
@@ -92,29 +92,6 @@ static void lvgl_hal_init(void)
     lv_img_set_src(cursor_obj, &mouse_cursor_icon);     /*Set the image source*/
     lv_indev_set_cursor(mouse_indev, cursor_obj);       /*Connect the image  object to the driver*/
 #endif
-}
-
-/**
- * @brief  初始化easy_logger
- */
-void easy_logger_init(void)
-{
-    /* close printf buffer */
-    setbuf(stdout, NULL);
-    /* initialize EasyLogger */
-    elog_init();
-    /* set EasyLogger log format */
-    elog_set_fmt(ELOG_LVL_ASSERT, ELOG_FMT_ALL);
-    elog_set_fmt(ELOG_LVL_ERROR, (ELOG_FMT_ALL & ~(ELOG_FMT_P_INFO | ELOG_FMT_T_INFO)));
-    elog_set_fmt(ELOG_LVL_WARN, (ELOG_FMT_ALL & ~(ELOG_FMT_P_INFO | ELOG_FMT_T_INFO)));
-    elog_set_fmt(ELOG_LVL_INFO, (ELOG_FMT_ALL & ~(ELOG_FMT_P_INFO | ELOG_FMT_T_INFO)));
-    elog_set_fmt(ELOG_LVL_DEBUG, (ELOG_FMT_ALL & ~(ELOG_FMT_P_INFO | ELOG_FMT_T_INFO)));
-    elog_set_fmt(ELOG_LVL_VERBOSE, (ELOG_FMT_ALL & ~(ELOG_FMT_P_INFO | ELOG_FMT_T_INFO)));
-#ifdef ELOG_COLOR_ENABLE
-    elog_set_text_color_enabled(true);
-#endif
-    /* start EasyLogger */
-    elog_start();
 }
 
 /**

@@ -26,8 +26,6 @@
  */
 int main(int argc, char *argv[])
 {
-    easy_logger_init();
-
     lvgl_init();
 
     application_init();
