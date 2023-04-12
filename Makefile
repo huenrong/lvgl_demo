@@ -1,6 +1,5 @@
 # 指定使用的交叉编译工具(根据项目情况修改)
 CC = gcc
-# CC = /usr/local/arm/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc
 
 # 生成的可执行文件名(根据项目情况修改)
 TARGET = lvgl_demo
@@ -17,16 +16,22 @@ LVGL_DIR ?= ${shell pwd}
 # -Wall: 打开所有警告信息
 # -O0: 不优化代码
 # -Werror: 警告报错误
-CFLAGS := -std=gnu99 -Wall -O0 # -Werror
+CFLAGS := -std=gnu99 -Wall -O0
 # 修改lv_drv_conf.h包含路经
 CFLAGS += -DLV_CONF_INCLUDE_SIMPLE
 
 # --------------------以下为指定头文件路径(根据项目情况修改)--------------------
 CFLAGS += -I./lvgl_inc
 
-# ------------------以下为链接器的链接参数设置(根据项目情况修改)-----------------
-LDFLAGS := -lpthread -lm
-LDFLAGS += -lSDL2
+# ------------------以下为指定动态链接库搜索路径(根据项目情况修改)-----------------
+LDFLAGS :=
+
+# ------------------以下为指定链接器参数(根据项目情况修改)-----------------
+# -Wl,-rpath: 指定运行时动态链接库搜索路径
+LDFLAGS +=
+
+# ------------------以下为指定需要链接的库(根据项目情况修改)-----------------
+LIBS := -lSDL2
 
 # 需要定义到CFLAGS后面
 include $(LVGL_DIR)/lvgl/lvgl.mk
@@ -59,7 +64,7 @@ TARGET_OBJS := $(TOP_OBJ) $(LVGL_OBJ) $(MOUSE_CURSOR_ICON_OBJ) $(APP_OBJ)
 # --------------------以下为编译默认目标规则(不需要修改)--------------------
 # Makefile的默认目标
 $(TARGET):$(TARGET_OBJS)
-	$(CC) $^ $(CFLAGS) $(LDFLAGS) -o $(TARGET)
+	$(CC) $^ $(CFLAGS) $(LDFLAGS) $(LIBS) -o $(TARGET)
 	@mkdir -p $(OUT_DIR)/bin
 	@mkdir -p $(OUT_DIR)/objs
 	@mv $(TARGET) $(OUT_DIR)/bin

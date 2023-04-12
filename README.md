@@ -10,8 +10,7 @@
 1. 修改Makefile
 
     - 修改GCC: 修改[Makefile](Makefile)文件中的`CC`为对应的GCC
-    - 使能SDL: 在[Makefile](Makefile)文件的`LDFLAGS`中增加`SDL2`
-
+    - 使能SDL: 在[Makefile](Makefile)文件的`LIBS`中增加`SDL2`
 
 2. 修改[lv_drv_conf.h](lvgl_inc/lv_drv_conf.h)文件
 
@@ -29,11 +28,10 @@
 
 #### 用于ARM Linux时的修改项
 
-1. 修改CMakeLists.txt
+1. 修改Makefile
 
     - 修改GCC: 修改[Makefile](Makefile)文件中的`CC`为对应的GCC
-    - 失能SDL: 在[Makefile](Makefile)文件的`LDFLAGS`中删除`SDL2`
-
+    - 失能SDL: 在[Makefile](Makefile)文件的`LIBS`中删除`SDL2`
 
 2. 修改[lv_drv_conf.h](lvgl_inc/lv_drv_conf.h)文件
 
